@@ -1,15 +1,35 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { graphiqlExpress, graphqlExpress } from 'graphql-server-express';
-import { makeExecutableSchema } from 'graphql-tools';
-import typeDefs from './controllers/schema';
-import resolvers from './controllers/resolver';
-import models from './models';
+require('dotenv').config()
+const app = require('./app')
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
-const app = express();
+const PORT = process.env.PORT || 3001
 
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema, context: { models } }));
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', }));
+// Why don't I need http createServer
+app.listen(PORT, ()=>{
+  console.log(`App listening on port ${PORT}!`)
+})
+app.on('error', onError)
 
-models.sequelize.sync().then(() => app.listen(3000));
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+

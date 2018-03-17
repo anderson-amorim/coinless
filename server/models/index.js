@@ -1,8 +1,13 @@
 import Sequelize from 'sequelize';
-import configs from '../config/config'
 
-const { username, password, database, host, dialect } = configs.development;
-const sequelize = new Sequelize(database, username, password, { host, dialect });
+const sequelize = new Sequelize(
+  process.env.DB_DATABASE,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT
+  });
 
 const db = {
   Expense: sequelize.import('./expense')
