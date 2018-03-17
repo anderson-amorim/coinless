@@ -7,15 +7,14 @@ export default `
     }
 
     type Query {
-        findAllExpenses: [Expense!]!
-        findManyExpensesByDate(date: String!): [Expense!]!
+        findAllExpenses(createdAt: String): [Expense!]!
         findOneExpense(id: Int!): Expense
         totalExpenses: Float!
     }
 
     type Mutation {
         createExpense(value: Float!): Expense
-        updateExpense(id: Int!, value: Float!): Expense
+        updateExpense(id: Int!, value: Float!): Int!
         deleteExpense(id: Int!): Int!
     }
 `;
