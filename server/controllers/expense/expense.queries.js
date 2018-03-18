@@ -1,6 +1,5 @@
 export const expenseQueries = {
     findAllExpenses: (parent, { createdAt }, { models }) => {
-        console.log(createdAt, !!createdAt);
         if (!createdAt) {
             return models.Expense.findAll();
         }

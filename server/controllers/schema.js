@@ -1,6 +1,6 @@
 export default `
     type Expense {
-        id: Int!
+        id: ID!
         value: Float!
         createdAt: String!
         updatedAt: String! 
