@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { createFragmentContainer, graphql } from 'react-relay'
 
 class Expense extends Component {
   render() {
@@ -24,10 +23,4 @@ class Expense extends Component {
   }
 }
 
-export default createFragmentContainer(Expense, graphql`
-  fragment Expense_expense on Expense {
-    id
-    value
-    createdAt
-  }
-`);
+export default Expense;

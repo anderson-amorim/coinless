@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SwitchButton from 'lyef-switch-button';
-import NewExpenseMutation from '../mutations/NewExpenseMutation';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 class AddExpense extends Component {
   state = {
@@ -48,7 +49,7 @@ class AddExpense extends Component {
               </div>
               <button className="btn btn-primary" onClick={this.addExpense}>
                 Add expense
-                      </button>
+              </button>
 
             </div>
           </div>
@@ -59,11 +60,27 @@ class AddExpense extends Component {
   }
 
   addExpense = () => {
-    console.log(this.state);
     const { value, credit } = this.state;
-    NewExpenseMutation(credit ? value : -value, () => console.log('funfou samerda!'))
+    this.props.mutate({
+      variables: {
+        value: credit ? value : -value
+      }
+    }).then(res => {
+      window.location.replace(`/expenses`);
+    }).catch(err => console.log(err));
   }
 
 }
 
-export default AddExpense;
+const mutation = gql`
+  mutation AddExpense($value: Float!) {
+    createExpense(value: $value) {
+      id
+      value
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+export default graphql(mutation)(AddExpense);
