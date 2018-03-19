@@ -13,7 +13,11 @@ You can pass them as variables via cmd or put inside a `.env` file on the projec
 
 To start the server:
 ```sh
+npm install
 npm run start
+
 or
+
+yarn
 yarn start
 ```
