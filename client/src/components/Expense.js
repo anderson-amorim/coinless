@@ -10,7 +10,7 @@ class Expense extends Component {
   handleDelete() {
     console.log('Deletando expense', this.props.id);
   }
-
+ 
   render() {
     const { id, value, createdAt, onDelete } = this.props;
     const isDebit = value < 0;

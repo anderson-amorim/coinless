@@ -14,8 +14,9 @@ import 'lyef-switch-button/css/main.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
+console.log(process.env.REACT_GRAPHQL_ENDPOINT)
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
+  link: new HttpLink({ uri: process.env.REACT_GRAPHQL_ENDPOINT }),
   cache: new InMemoryCache()
 });
 
