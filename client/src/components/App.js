@@ -4,12 +4,15 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ExpensesContainer from './ExpensesContainer';
+import AddExpenseContainer from '../containers/AddExpenseContainer';
+import EditExpenseContainer from '../containers/EditExpenseContainer';
+import ExpensesPage from './ExpensesPage';
 import Home from './Home';
 import logo from '../logo.svg';
 import './App.css';
 import 'lyef-switch-button/css/main.css';
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.css';
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
@@ -23,13 +26,15 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <div className="App-intro" style={{ width: 500, margin: 'auto', marginTop: 20 }}>
+        <div className="App-intro" style={{ width: 600, minHeight: 700, margin: 'auto', marginTop: 20 }}>
           <ApolloProvider client={client}>
             <Router>
               <div>
                 <Route exact path="/" component={Home} />
                 <Switch>
-                  <Route exact path="/expenses" component={ExpensesContainer} />
+                  <Route exact path="/expenses" component={ExpensesPage} />
+                  <Route exact path="/expenses/new" component={AddExpenseContainer} />
+                  <Route exact path="/expenses/:id" component={EditExpenseContainer} />
                 </Switch>
               </div>
             </Router>

@@ -35,3 +35,25 @@
 .input:checked + .toggle, .input:checked + .toggle:after {
   background-color: #8ce196!important;
 }
+
+div.debit, .expense-icon.fa.fa-times{
+  color: #e18c8c;
+}
+
+div.credit {
+  color: #8ce196
+}
+
+.expense-icon {
+  margin: 5px;
+  font-size: 20px!important;
+  cursor: pointer;
+}
+
+a.expense-icon:hover {
+  text-decoration: none;
+}
+
+.react-date-picker__calendar.react-date-picker__calendar--open {
+  z-index: 9999;
+}

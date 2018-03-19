@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import SwitchButton from 'lyef-switch-button';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import CurrencyInput from 'react-currency-input';
 
 class AddExpense extends Component {
+
   state = {
     value: 0.00,
     credit: true
   }
 
-  toggleSwitch = () => {
+  toggleSwitch() {
     this.setState(prevState => {
       return {
         credit: !prevState.credit
@@ -17,7 +16,24 @@ class AddExpense extends Component {
     });
   };
 
+  handleChange(event, maskedvalue, floatvalue) {
+    this.setState({ value: floatvalue });
+  }
+
+  componentDidMount() {
+    const { expense } = this.props;
+    if (expense) {
+      const { value } = expense;
+      this.setState({
+        value: value < 0 ? -value : value,
+        credit: value > 0
+      });
+    }
+  }
+
   render() {
+    const { onFinish } = this.props;
+    console.log(this.state)
     return (
       <div >
         <div>
@@ -26,29 +42,27 @@ class AddExpense extends Component {
             margin: 'auto'
           }}>
             <div className="card-body">
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">New Expense</label>
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">$</span>
-                  </div>
-                  <input
-                    className="form-control"
-                    placeholder="Expense's amount"
-                    onChange={event => this.setState({ value: event.target.value })} />
+              <h4 >New Expense</h4>
+              <div className="form-group" style={{ width: 180, margin: 'auto' }}>
+                <CurrencyInput
+                  className="form-control"
+                  prefix="$"
+                  precision="2"
+                  value={this.state.value}
+                  onChangeEvent={this.handleChange.bind(this)} />
+              </div>
+              <div className="form-group" style={{ marginTop: 10 }}>
+                <div className="form-check form-check-inline">
+                  <input className="form-check-input" type="radio" name="expenseOptions" id="debit" checked={!this.state.credit} onChange={() => this.setState({ credit: false })} />
+                  <label className="form-check-label" htmlFor="debit">Debit</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input className="form-check-input" type="radio" name="expenseOptions" id="credit" checked={this.state.credit} onChange={() => this.setState({ credit: true })} />
+                  <label className="form-check-label" htmlFor="credit">Credit</label>
                 </div>
               </div>
-              <div className="form-group">
-                <SwitchButton
-                  id="my-button"
-                  labelLeft="Debit"
-                  labelRight="Credit"
-                  isChecked={this.state.credit}
-                  action={this.toggleSwitch}
-                />
-              </div>
-              <button className="btn btn-primary" onClick={this.addExpense}>
-                Add expense
+              <button className="btn btn-primary" onClick={() => onFinish(this.state)}>
+                Save
               </button>
 
             </div>
@@ -58,29 +72,6 @@ class AddExpense extends Component {
       </div>
     )
   }
-
-  addExpense = () => {
-    const { value, credit } = this.state;
-    this.props.mutate({
-      variables: {
-        value: credit ? value : -value
-      }
-    }).then(res => {
-      window.location.replace(`/expenses`);
-    }).catch(err => console.log(err));
-  }
-
 }
 
-const mutation = gql`
-  mutation AddExpense($value: Float!) {
-    createExpense(value: $value) {
-      id
-      value
-      createdAt
-      updatedAt
-    }
-  }
-`
-
-export default graphql(mutation)(AddExpense);
+export default AddExpense;

@@ -1,7 +1,11 @@
 export const expenseQueries = {
     findAllExpenses: (parent, { createdAt }, { models }) => {
         if (!createdAt) {
-            return models.Expense.findAll();
+            return models.Expense.findAll({
+                order: [
+                    ['id', 'ASC']
+                ]
+            });
         }
         const startDate = new Date(createdAt);
         startDate.setHours(0, 0, 0, 0);
@@ -12,7 +16,10 @@ export const expenseQueries = {
                 createdAt: {
                     $between: [startDate, endDate]
                 }
-            }
+            },
+            order: [
+                ['id', 'ASC']
+            ]
         });
     },
 

@@ -5,17 +5,17 @@ class App extends Component {
   render() {
     return (
       <div className="jumbotron">
-        By using this software you hereby agree to hire Anderson de Amorim!<br /><br /><br />
+        By using this software you hereby agree to hire <br /><strong>Anderson de Amorim!</strong><br /><br /><br />
         <Link to="/expenses/" className="btn btn-secondary">
           For Sure!
         </Link>
         {' '}
         <Link to="/expenses/" className="btn btn-secondary">
-          Obviously!
+          Can't see why not!
         </Link>
         {' '}
         <Link to="/expenses/" className="btn btn-secondary">
-          Can't see why not!
+          Right NAOOOO!
         </Link>
       </div>
     );
