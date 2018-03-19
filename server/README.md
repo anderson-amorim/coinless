@@ -9,7 +9,7 @@ DB_DATABASE=database_development
 DB_HOST=localhost
 DB_DIALECT=postgres
 ```
-You can either pass then as variables via cmd or put then inside a `.env` file on the project's root
+You can pass them as variables via cmd or put inside a `.env` file on the project's root
 
 To start the server:
 ```sh
